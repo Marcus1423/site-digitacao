@@ -1,0 +1,37 @@
+.word-display {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    font-size: 24px;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+    max-height: 150px;
+    overflow: hidden;
+    word-wrap: break-word;
+  }
+  
+  .current-word {
+    text-decoration: underline;
+    color: white;
+  }
+  
+  .correct-word {
+    color: limegreen;
+  }
+  
+  .char-correct {
+    color: limegreen;
+  }
+  
+  .char-incorrect {
+    color: red;
+  }
+  
+  .stats-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #222;
+    text-align: center;
+    border-radius: 8px;
+  }
