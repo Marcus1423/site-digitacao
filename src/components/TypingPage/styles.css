@@ -1,0 +1,50 @@
+.app-container {
+    background-color: #111;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: sans-serif;
+  }
+  
+  .typing-area {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .input-box {
+    width: 97%;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    background-color: #222;
+    color: white;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+  }
+  
+  .word-display {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-bottom: 1rem;
+  }
+  
+  .current-word {
+    text-decoration: underline;
+    color: yellow;
+  }
+  
+  .correct-word {
+    color: limegreen;
+  }
+  
+  .stats-box {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #222;
+    text-align: center;
+    border-radius: 8px;
+  }
