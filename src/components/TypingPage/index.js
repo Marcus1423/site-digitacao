@@ -4,19 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import WordDisplay from '../../components/WordDisplay';
 import Stats from '../../components/Stats';
 import WpmChart from '../../components/WpmChart';
+import { serverTimestamp } from "firebase/firestore";
 
 import { useTypingLogic } from '../../hooks/useTypingLogic';
 import { useTypingTimer } from '../../hooks/useTypingTimer';
 import { getWPM, getCPM, getAccuracy } from '../../utils/typingHelpers';
 import WordCountSeletor from '../../components/WordCountSeletor';
 import { saveTestResult } from '../../utils/saveTestResult.js';
+import { getUserId } from '../../utils/userId/index.js';
 
 function TypingPage() {
   const [wordCount, setWordCount] = useState(30); // nova opção de controle
   const navigate = useNavigate()
 
-  const now = new Date();
-  const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+ 
 
   const {
     words,
@@ -47,7 +48,8 @@ function TypingPage() {
         cpm,
         accuracy,
         correctCount,
-        date: formattedDate,
+        date: serverTimestamp(),
+        userId: getUserId()
       });
     }
   }, [isFinished]);
