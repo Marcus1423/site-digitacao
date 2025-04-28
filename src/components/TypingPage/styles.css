@@ -48,3 +48,21 @@
     text-align: center;
     border-radius: 8px;
   }
+
+  .view-results-button {
+    display: flex;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    justify-self: center;
+  }
+  
+  .view-results-button:hover {
+    background-color: #45a049;
+  }

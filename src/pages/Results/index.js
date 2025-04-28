@@ -2,7 +2,7 @@ import './styles.css'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../firebase'; // seu arquivo de configuração do Firebase
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 
 function Results() {
   const [results, setResults] = useState([]);
@@ -11,13 +11,15 @@ function Results() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'testResults')); // Aqui corrigido
+        const resultsRef = collection(db, 'testResults');
+        const q = query(resultsRef, orderBy('date', 'desc')); // 
+
+        const querySnapshot = await getDocs(q);
         const fetchedResults = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
 
-        console.log(fetchedResults); // para ver se buscou certo
         setResults(fetchedResults);
       } catch (error) {
         console.error('Erro ao buscar resultados:', error);
