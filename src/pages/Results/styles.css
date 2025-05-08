@@ -2,7 +2,7 @@
   min-height: 100vh; 
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0 20px 0 20px;
   box-sizing: border-box;
   background-color: #111;
   color: #fff; /* cor de fundo opcional */
@@ -14,16 +14,36 @@
 }
 
 .results-table-container {
+  max-height: 500px;
   flex: 1;
-  overflow-y: auto; /* Scroll se precisar */
+  overflow: auto; 
   background: #1b1b1b;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  height: 100px;
+}
+
+.results-table-container::-webkit-scrollbar {
+  width: 8px; /* largura da scrollbar */
+}
+
+.results-table-container::-webkit-scrollbar-thumb {
+  background-color: #888; /* cor da parte "rolável" */
+  border-radius: 4px; /* borda arredondada */
+}
+
+.results-table-container::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* cor quando passa o mouse por cima */
+}
+
+.results-table-container::-webkit-scrollbar-track {
+  background: #f1f1f1; /* cor de fundo da área da scrollbar */
 }
 
 .results-table {
   width: 100%;
+  max-height: 90%;
   border-collapse: collapse;
   border: 1px solid #ddd;
   border-radius: 24px;
@@ -38,6 +58,7 @@
   padding: 12px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+  
 }
 
 .results-table th {

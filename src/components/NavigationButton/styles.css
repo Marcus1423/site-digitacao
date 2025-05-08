@@ -1,0 +1,19 @@
+.button-container {
+    display: flex;
+    justify-content: center; 
+  }
+  
+  .view-home-button {
+    display: flex;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    justify-self: center;
+  }
+  
