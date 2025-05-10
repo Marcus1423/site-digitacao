@@ -14,10 +14,8 @@ import { saveTestResult } from '../../utils/saveTestResult.js';
 import { getUserId } from '../../utils/userId/index.js';
 
 function TypingPage() {
-  const [wordCount, setWordCount] = useState(30); // nova opção de controle
-  const navigate = useNavigate()
-
- 
+  const [wordCount, setWordCount] = useState(30);
+  const navigate = useNavigate();
 
   const {
     words,
@@ -25,32 +23,42 @@ function TypingPage() {
     currentWordIndex,
     correctCount,
     startTime,
+    endTime,
     isFinished,
     correctChars,
+    typedChars,
     wpmHistory,
     inputRef,
     handleChange,
     resetTest,
     setWpmHistory,
-  } = useTypingLogic(wordCount); // passando wordCount pro hook
+  } = useTypingLogic(wordCount);
+
+  // Cálculo do tempo total em segundos
+  const getDurationInSeconds = () => {
+    if (!startTime || !endTime) return 0;
+    return Math.round((endTime - startTime) / 1000);
+  };
 
   useEffect(() => {
     if (!isFinished) {
       inputRef.current?.focus();
     } else {
-      // Quando o teste termina, salva no Firestore
+      const duration = getDurationInSeconds();
+
       const wpm = getWPM(startTime, correctChars);
       const cpm = getCPM(startTime, correctChars);
-      const accuracy = getAccuracy(correctCount, currentWordIndex);
-  
+      const accuracy = getAccuracy(correctChars, typedChars);
+
       saveTestResult({
         wpm,
         cpm,
         accuracy,
         correctCount,
+        duration, // novo campo
         date: serverTimestamp(),
         userId: getUserId(),
-        wordCount: words.length
+        wordCount: words.length,
       });
     }
   }, [isFinished]);
@@ -60,35 +68,34 @@ function TypingPage() {
   const handleWordCountChange = (e) => {
     const newCount = Number(e.target.value);
     setWordCount(newCount);
-    resetTest(newCount); // reinicia com nova quantidade
+    resetTest(newCount);
   };
 
   return (
     <div className="app-container">
       <div className="typing-area">
-      {!isFinished && (
-        <>
-          <WordCountSeletor 
-            wordCount={wordCount}
-            onChange={handleWordCountChange}
-          />
+        {!isFinished && (
+          <>
+            <WordCountSeletor 
+              wordCount={wordCount}
+              onChange={handleWordCountChange}
+            />
 
-       
-          <WordDisplay
-            words={words}
-            currentInput={currentInput}
-            currentWordIndex={currentWordIndex}
-          />
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentInput}
-            onChange={handleChange}
-            className="input-box"
-            disabled={isFinished}
-          />
-        </>
-      )}
+            <WordDisplay
+              words={words}
+              currentInput={currentInput}
+              currentWordIndex={currentWordIndex}
+            />
+            <input
+              ref={inputRef}
+              type="text"
+              value={currentInput}
+              onChange={handleChange}
+              className="input-box"
+              disabled={isFinished}
+            />
+          </>
+        )}
 
         {isFinished && (
           <>
@@ -98,15 +105,16 @@ function TypingPage() {
               total={words.length}
               wpm={getWPM(startTime, correctChars)}
               cpm={getCPM(startTime, correctChars)}
-              accuracy={getAccuracy(correctCount, currentWordIndex)}
+              accuracy={getAccuracy(correctChars, typedChars)}
+              duration={getDurationInSeconds()} // mostrar na interface
               onRestart={() => resetTest(wordCount)}
             />
             <button 
-            className="view-results-button" 
-            onClick={() => navigate('/results')}
-          >
-            Ver Resultados
-          </button>
+              className="view-results-button" 
+              onClick={() => navigate('/results')}
+            >
+              Ver Resultados
+            </button>
           </>
         )}
       </div>
