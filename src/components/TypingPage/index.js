@@ -49,7 +49,8 @@ function TypingPage() {
         accuracy,
         correctCount,
         date: serverTimestamp(),
-        userId: getUserId()
+        userId: getUserId(),
+        wordCount: words.length
       });
     }
   }, [isFinished]);
